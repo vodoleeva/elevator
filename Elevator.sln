@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElevatorApi", "ElevatorApi\ElevatorApi.csproj", "{F5C7D546-9700-42E2-8784-520D6579E8B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ElevatorTests", "ElevatorTests\ElevatorTests.csproj", "{A83F0CF3-EDB1-4A33-9331-B6AC46080758}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{F5C7D546-9700-42E2-8784-520D6579E8B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F5C7D546-9700-42E2-8784-520D6579E8B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F5C7D546-9700-42E2-8784-520D6579E8B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F5C7D546-9700-42E2-8784-520D6579E8B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A83F0CF3-EDB1-4A33-9331-B6AC46080758}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A83F0CF3-EDB1-4A33-9331-B6AC46080758}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A83F0CF3-EDB1-4A33-9331-B6AC46080758}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A83F0CF3-EDB1-4A33-9331-B6AC46080758}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+EndGlobal
