@@ -22,6 +22,16 @@ public class Passenger
     {
         State = State.Dead;
     }
+    
+    public bool IsInjured()
+    {
+        return State == State.Injured;
+    }
+    
+    public bool IsDead()
+    {
+        return State == State.Dead;
+    }
 }
 
 public enum State

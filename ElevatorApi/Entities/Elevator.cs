@@ -11,14 +11,14 @@ public class Elevator
     public ElevatorState State { get; private set; }
     public List<Passenger> Passengers { get; private set; }
 
-    public static int[] Levels = new int []{ 1,2,3,4,5,6,7,8};
+    public static readonly int[] Levels = { 1,2,3,4,5,6,7,8 };
     public static int amountOfActiveEvevators;
 
     
     // call technician
     // repair within 30 seconds
 
-
+    
     public Elevator(int maximalWeight)
     {
         Level = 1;
@@ -119,8 +119,6 @@ public class Elevator
             Level = Levels[0];
             RandomlyInjurePassengers();
         }
-
-        
     }
 
     // Some passengers are lucky to survive the elevator crash.
