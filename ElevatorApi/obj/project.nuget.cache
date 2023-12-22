@@ -1,0 +1,15 @@
+{
+  "version": 2,
+  "dgSpecHash": "kcqbiLzsvYMewWrHRPqIEXxFONIqxq6JYyxtMtL68cvKzRk/lh+r29sxQ2ke4mceHc8Spp0aFqlyZsHO3H1Fhw==",
+  "success": true,
+  "projectFilePath": "/Users/dv/projects/dotnet-training/Training1/ElevatorApi/ElevatorApi.csproj",
+  "expectedPackageFiles": [
+    "/Users/dv/.nuget/packages/microsoft.extensions.apidescription.server/6.0.5/microsoft.extensions.apidescription.server.6.0.5.nupkg.sha512",
+    "/Users/dv/.nuget/packages/microsoft.openapi/1.2.3/microsoft.openapi.1.2.3.nupkg.sha512",
+    "/Users/dv/.nuget/packages/swashbuckle.aspnetcore/6.5.0/swashbuckle.aspnetcore.6.5.0.nupkg.sha512",
+    "/Users/dv/.nuget/packages/swashbuckle.aspnetcore.swagger/6.5.0/swashbuckle.aspnetcore.swagger.6.5.0.nupkg.sha512",
+    "/Users/dv/.nuget/packages/swashbuckle.aspnetcore.swaggergen/6.5.0/swashbuckle.aspnetcore.swaggergen.6.5.0.nupkg.sha512",
+    "/Users/dv/.nuget/packages/swashbuckle.aspnetcore.swaggerui/6.5.0/swashbuckle.aspnetcore.swaggerui.6.5.0.nupkg.sha512"
+  ],
+  "logs": []
+}
