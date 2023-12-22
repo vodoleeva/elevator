@@ -1,20 +1,22 @@
+
 namespace ElevatorApp.Entities;
+
 
 public class Elevator
 {
     private readonly int _maxWeight;
     private int _currentWeight;
     private readonly Guid _id;
-    private bool _isActive;
-    
+    public int Level { get; private set; }
+    public ElevatorState State { get; private set; }
+    public IEnumerable<Passenger> Passengers { get; private set; }
+
+    public static int[] Levels = new []{ 1,2,3,4,5,6,7,8};
     public static int amountOfActiveEvevators;
+
     
-    
-    // position
-    // randomly broken
     // call technician
     // repair within 30 seconds
-
 
 
     public Elevator(int maximalWeight)
@@ -30,23 +32,39 @@ public class Elevator
         {
             amountOfActiveEvevators += 1;
         }
-
-        _isActive = true;
-        _currentWeight += passenger.GetWeight();
-        Console.WriteLine($"Plus {passenger.GetWeight()} kg. Current weight {_currentWeight} kg.");
+        _currentWeight += passenger.Weight;
+        
+        Console.WriteLine($"Plus {passenger.Weight} kg. Current weight {_currentWeight} kg.");
     }
     
     public void RemovePassenger(Passenger passenger)
     {
-        _currentWeight -= passenger.GetWeight();
+        _currentWeight -= passenger.Weight;
         if (_currentWeight <= 0)
         {
             amountOfActiveEvevators -= 1;
-            _isActive = false;
         }
-        Console.WriteLine($"Minus {passenger.GetWeight()} kg. Current weight {_currentWeight} kg.");
+        Console.WriteLine($"Minus {passenger.Weight} kg. Current weight {_currentWeight} kg.");
+    }
+
+
+    public void MoveUp()
+    {
+        if (Level <= Levels[Levels.Length])
+        {
+            Level += 1;
+            RandomlyBreak();
+        }
     }
     
+    public void MoveDown()
+    {
+        if (Level >= Levels[0])
+        {
+            RandomlyBreak();
+            Level -= 1;
+        }
+    }
     
 
     public bool IsMaxWeightAchieved()
@@ -59,5 +77,44 @@ public class Elevator
 
         return isElevatorFull;
     }
+
+    // The elevator crashes now and then, falls to the first floor. There might be casualties involved.
+    private void RandomlyBreak()
+    { 
+        // break approx. in 10% of trips
+        var rnd = new Random();
+        int result = rnd.Next(1, 10);
+        if (result != 10)
+        {
+            return;
+        }
+        State = ElevatorState.Broken;
+        Level = Levels[0];
+        RandomlyInjurePassengers();
+        
+    }
+
+    // Some passengers are lucky to survive the elevator crash.
+    private void RandomlyInjurePassengers()
+    {
+        var rnd = new Random();
+        foreach (var passenger in Passengers)
+        {
+            if (rnd.Next(1, 10) < 4)
+            {
+                passenger.Unalive();
+            } else if (rnd.Next(1, 10) > 7)
+            {
+                passenger.GetInjury();
+            }
+        }
+    }
+
+    public enum ElevatorState
+    {
+        Ok = 0,
+        Broken = 1
+    }
     
+
 }

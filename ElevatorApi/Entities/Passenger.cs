@@ -3,19 +3,30 @@ namespace ElevatorApp.Entities;
 public class Passenger
 {
     private Guid _id;
-    
-    private readonly int _weight;
+    public int Weight { get; private set; }
+    public State State { get; private set; }
 
     public Passenger(int weight)
     {
         _id = Guid.NewGuid();
-        _weight = weight;
+        Weight = weight;
+        State = State.Healthy;
     }
 
-    public int GetWeight()
+    public void GetInjury()
     {
-        return _weight;
+        State = State.Injured;
     }
 
+    public void Unalive()
+    {
+        State = State.Dead;
+    }
+}
 
+public enum State
+{
+    Healthy = 0,
+    Injured = 1,
+    Dead = 2
 }
