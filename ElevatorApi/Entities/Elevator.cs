@@ -9,9 +9,9 @@ public class Elevator
     private readonly Guid _id;
     public int Level { get; private set; }
     public ElevatorState State { get; private set; }
-    public IEnumerable<Passenger> Passengers { get; private set; }
+    public List<Passenger> Passengers { get; private set; }
 
-    public static int[] Levels = new []{ 1,2,3,4,5,6,7,8};
+    public static int[] Levels = new int []{ 1,2,3,4,5,6,7,8};
     public static int amountOfActiveEvevators;
 
     
@@ -21,25 +21,54 @@ public class Elevator
 
     public Elevator(int maximalWeight)
     {
+        Level = 1;
         _maxWeight = maximalWeight;
         _currentWeight = 0;
         _id = Guid.NewGuid();
+        Passengers = new List<Passenger>();
+        State = ElevatorState.Ok;
     }
 
-    public void AddPassenger(Passenger passenger)
+    public void AddPassengers(List<Passenger> passengers)
     {
         if (_currentWeight <= 0)
         {
             amountOfActiveEvevators += 1;
         }
-        _currentWeight += passenger.Weight;
+
+        var passengersWeight = passengers.Sum(i => i.Weight);
+        _currentWeight += passengersWeight;
         
-        Console.WriteLine($"Plus {passenger.Weight} kg. Current weight {_currentWeight} kg.");
+        Passengers.AddRange(passengers);
+        
+        Console.WriteLine($"Plus {passengersWeight} kg. Current weight {_currentWeight} kg.");
     }
     
-    public void RemovePassenger(Passenger passenger)
+    public void RemovePassengers(List<Passenger> passengers)
     {
+        
+        foreach (var passenger in passengers)
+        {
+            Passengers.Remove(passenger);
+        }
+        
+        var passengersWeight = passengers.Sum(i => i.Weight);
+        _currentWeight -= passengersWeight;
+
+        if (_currentWeight <= 0)
+        {
+            amountOfActiveEvevators -= 1;
+        }
+        Console.WriteLine($"Minus {passengersWeight} kg. Current weight {_currentWeight} kg.");
+    }
+    
+    public void RemovePassengers(Passenger passenger)
+    {
+        
+        Passengers.Remove(passenger);
+        
         _currentWeight -= passenger.Weight;
+
         if (_currentWeight <= 0)
         {
             amountOfActiveEvevators -= 1;
@@ -50,7 +79,7 @@ public class Elevator
 
     public void MoveUp()
     {
-        if (Level <= Levels[Levels.Length])
+        if (Level <= Levels[^1])
         {
             Level += 1;
             RandomlyBreak();
@@ -61,8 +90,8 @@ public class Elevator
     {
         if (Level >= Levels[0])
         {
-            RandomlyBreak();
             Level -= 1;
+            RandomlyBreak();
         }
     }
     
@@ -84,19 +113,23 @@ public class Elevator
         // break approx. in 10% of trips
         var rnd = new Random();
         int result = rnd.Next(1, 10);
-        if (result != 10)
+        if (result == 1)
         {
-            return;
+            State = ElevatorState.Broken;
+            Level = Levels[0];
+            RandomlyInjurePassengers();
         }
-        State = ElevatorState.Broken;
-        Level = Levels[0];
-        RandomlyInjurePassengers();
+
         
     }
 
     // Some passengers are lucky to survive the elevator crash.
     private void RandomlyInjurePassengers()
     {
+        if (Passengers.Count == 0)
+        {
+            return;
+        }
         var rnd = new Random();
         foreach (var passenger in Passengers)
         {
@@ -114,6 +147,11 @@ public class Elevator
     {
         Ok = 0,
         Broken = 1
+    }
+
+    public bool IsBroken()
+    {
+        return State == ElevatorState.Broken;
     }
     
 
