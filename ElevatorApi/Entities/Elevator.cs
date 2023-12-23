@@ -8,7 +8,7 @@ public class Elevator
     private int _currentWeight;
     private readonly Guid _id;
     public int Level { get; private set; }
-    public ElevatorState State { get; private set; }
+    private ElevatorState State { get; set; }
     public List<Passenger> Passengers { get; private set; }
 
     public static readonly int[] Levels = { 1,2,3,4,5,6,7,8 };
@@ -140,17 +140,15 @@ public class Elevator
             }
         }
     }
-
-    public enum ElevatorState
-    {
-        Ok = 0,
-        Broken = 1
-    }
-
+    
     public bool IsBroken()
     {
         return State == ElevatorState.Broken;
     }
-    
+}
 
+public enum ElevatorState
+{
+    Ok = 0,
+    Broken = 1
 }
