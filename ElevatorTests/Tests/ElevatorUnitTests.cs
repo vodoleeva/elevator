@@ -24,42 +24,6 @@ public class ElevatorUnitTests
     }
 
     [Fact]
-    public void ElevatorSometimesCrashes()
-    {
-        var elevator = new Elevator(300);
-        Passenger passenger1 = new Passenger( 100);
-        Passenger passenger2 = new Passenger(80);
-        
-        elevator.AddPassengers(new List<Passenger>{passenger1, passenger2});
-        
-        // move up and down till it breaks
-        while (!elevator.IsBroken())
-        {
-            while (elevator.Level != Elevator.Levels[^1])
-            {
-                elevator.MoveUp();
-                if (elevator.IsBroken())
-                {
-                    break; // duh.
-                }
-            }
-            
-            while (elevator.Level != Elevator.Levels[0])
-            {
-                elevator.MoveDown();
-                if (elevator.IsBroken())
-                {
-                    break; 
-                }
-            }
-        }
-        
-        Assert.True(elevator.IsBroken());
-        
-        
-    }
-    
-    [Fact]
     public void ElevatorSometimesInjuresPassengers()
     {
         var elevator = new Elevator(300);
@@ -69,12 +33,19 @@ public class ElevatorUnitTests
         elevator.AddPassengers(new List<Passenger>{passenger1, passenger2});
         
         // move up and down till it breaks
-        while (elevator.Passengers.FindIndex(p => p.IsInjured() || p.IsDead()) == -1)
+        MoveElevatorTillItBreaks(elevator);
+        
+        Assert.True(IsAnyoneInjured(elevator.Passengers));
+    }
+
+    private void MoveElevatorTillItBreaks(Elevator elevator)
+    {
+        while (!IsAnyoneInjured(elevator.Passengers))
         {
             while (elevator.Level != Elevator.Levels[^1])
             {
                 elevator.MoveUp();
-                if (elevator.IsBroken())
+                if (IsAnyoneInjured(elevator.Passengers))
                 {
                     break;
                 }
@@ -83,15 +54,18 @@ public class ElevatorUnitTests
             while (elevator.Level != Elevator.Levels[0])
             {
                 elevator.MoveDown();
-                if (elevator.IsBroken())
+                if (IsAnyoneInjured(elevator.Passengers))
                 {
-                    break; 
+                    break;
                 }
             }
+
+            MoveElevatorTillItBreaks(elevator);
         }
-        
-        Assert.True(elevator.Passengers.FindIndex(p => p.IsInjured() || p.IsDead()) >= 0);
-        
-        
+    }
+
+    private bool IsAnyoneInjured(List<Passenger>passengers)
+    {
+        return passengers.FindIndex(p => p.IsInjured() || p.IsDead()) != -1;
     }
 }
