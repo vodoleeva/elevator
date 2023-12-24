@@ -9,8 +9,8 @@ public class ElevatorUnitTests
     {
         var elevator = new Elevator(150);
 
-        Passenger passenger1 = new Passenger( 100);
-        Passenger passenger2 = new Passenger(80);
+        Passenger passenger1 = new Passenger( 100, "Jane");
+        Passenger passenger2 = new Passenger(80, "Ron");
         
         elevator.AddPassengers(new List<Passenger>{passenger1, passenger2});
 
@@ -27,8 +27,8 @@ public class ElevatorUnitTests
     public void ElevatorSometimesInjuresPassengers()
     {
         var elevator = new Elevator(300);
-        Passenger passenger1 = new Passenger( 100);
-        Passenger passenger2 = new Passenger(80);
+        Passenger passenger1 = new Passenger( 100, "Jane");
+        Passenger passenger2 = new Passenger(80, "Ron");
         
         elevator.AddPassengers(new List<Passenger>{passenger1, passenger2});
         

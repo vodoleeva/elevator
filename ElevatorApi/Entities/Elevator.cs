@@ -73,7 +73,6 @@ public class Elevator
         {
             amountOfActiveEvevators -= 1;
         }
-        Console.WriteLine($"Minus {passenger.Weight} kg. Current weight {_currentWeight} kg.");
     }
 
 
@@ -107,7 +106,7 @@ public class Elevator
         return isElevatorFull;
     }
 
-    // The elevator crashes now and then, falls to the first floor. There might be casualties involved.
+    // The elevator crashes now and then and falls to the first floor. There might be casualties involved.
     private void RandomlyBreak()
     { 
         // break approx. in 10% of trips
