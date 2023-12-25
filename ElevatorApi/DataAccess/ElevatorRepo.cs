@@ -1,6 +1,6 @@
 using ElevatorApp.Entities;
 
-namespace ElevatorApp.Repo;
+namespace ElevatorApp.DataAccess;
 
 public class ElevatorRepo
 {

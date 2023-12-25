@@ -34,7 +34,6 @@ public class PassengerService: IPassengerService
         WeightCategory randomWeightCategory = (WeightCategory) values.GetValue(random.Next(values.Length));
         
         return _passengerRepo.CreatePassenger(WeightDic[randomWeightCategory], PassengerNames[nameIdx]);
-        
     }
 }
 

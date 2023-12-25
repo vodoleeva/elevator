@@ -1,30 +1,13 @@
 
-using ElevatorApp;
 using ElevatorApp.Entities;
 
 public class Programm
 {
     public static void Main(string[] args)
     {
-        CreateHostBuilder(args)
-            .Build();
-
-        Engine engine = Engine.GetInstance();
+        Engine engine = new Engine();
         engine.Run();
-        //.Run();
     }
-    
-    private static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args)
-        .ConfigureLogging(logging =>
-        {
-            logging.ClearProviders();
-            logging.AddDebug();
-            logging.AddConsole();
-        })
-        .ConfigureWebHostDefaults(webBuilder =>
-        {
-            webBuilder.UseStartup<Startup>();
-        });
 }
 
 

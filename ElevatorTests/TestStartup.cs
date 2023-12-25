@@ -1,7 +1,7 @@
 using System.Reflection;
+using ElevatorApp.DataAccess;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.Extensions.DependencyInjection;
-using ElevatorApp.Repo;
 using ElevatorApp.Services;
 
 namespace ElevatorTests;

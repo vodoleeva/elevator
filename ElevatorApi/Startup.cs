@@ -1,4 +1,7 @@
 using ElevatorApp.DataAccess;
+using ElevatorApp.Entities;
+using ElevatorApp.Interfaces;
+using ElevatorApp.Services;
 using ElevatorApp.Services.Passenger;
 using Microsoft.OpenApi.Models;
 
@@ -10,11 +13,13 @@ public class Startup
     {
         services.AddHttpContextAccessor();
 
-        // services.AddScoped<Services.ElevatorService>();
-        // services.AddScoped<Repo.ElevatorRepo>();
-        //
-        // services.AddScoped<PassengerService>();
-        // services.AddScoped<PassengerRepo>();
+        services.AddScoped<ElevatorRepo>();
+        services.AddScoped<ElevatorService>();
+        services.AddScoped<IPassengerRepo, PassengerRepo>();
+        services.AddScoped<IPassengerService, PassengerService>();
+
+
+        services.AddSingleton<Engine>();
         
         
 
