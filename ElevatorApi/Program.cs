@@ -5,7 +5,7 @@ public class Programm
 {
     public static void Main(string[] args)
     {
-        Engine engine = new Engine();
+        Engine engine = Engine.GetInstance();
         engine.Run();
     }
 }
