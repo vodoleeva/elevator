@@ -33,12 +33,12 @@ public class AmbulanceWorker
 
     public void TakeOutInjured(Elevator elevator)
     {
-        foreach (var passenger in elevator.Passengers)
+        foreach (var passenger in elevator.GetCurrentPassengers())
         {
             if (passenger.IsInjured())
             {
                 Activity = AmbulanceActivity.PickUpPassengers;
-                elevator.RemovePassengers(passenger);
+                elevator.BeLeftBy(new List<Passenger> { passenger });
                 passenger.ChangeActivity(PassengersActivity.LyingInJanitorsTransporter);
             }
         }

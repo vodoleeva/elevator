@@ -1,23 +1,22 @@
 
+using ElevatorApp.Interfaces;
+
 namespace ElevatorApp.Entities;
 
 
-public class Elevator
+public class Elevator: IElevator
 {
     private readonly int _maxWeight;
-    private int _currentWeight;
     private readonly Guid _id;
-    public int Level { get; private set; }
-    private ElevatorState State { get; set; }
-    public List<Passenger> Passengers { get; private set; }
+    private int _currentWeight;
+    private int Level { get; set; }
+    private bool IsBroken { get; set; }
+    private bool IsOpen { get; set; }
+    private List<Passenger> Passengers { get; set; }
 
-    public static readonly int[] Levels = { 1,2,3,4,5,6,7,8 };
-    public static int amountOfActiveEvevators;
-
+    private static readonly int[] Levels = { 1,2,3,4,5,6,7,8 };
     
-    // call technician
-    // repair within 30 seconds
-
+    public static int amountOfActiveEvevators;
     
     public Elevator(int maximalWeight)
     {
@@ -26,10 +25,16 @@ public class Elevator
         _currentWeight = 0;
         _id = Guid.NewGuid();
         Passengers = new List<Passenger>();
-        State = ElevatorState.Ok;
+        IsBroken = false;
+        IsOpen = false;
     }
 
-    public void AddPassengers(List<Passenger> passengers)
+    public List<Passenger> GetCurrentPassengers()
+    {
+        return Passengers;
+    }
+
+    public void BeEnteredBy(List<Passenger> passengers)
     {
         if (_currentWeight <= 0)
         {
@@ -40,11 +45,11 @@ public class Elevator
         _currentWeight += passengersWeight;
         
         Passengers.AddRange(passengers);
-        
+
         Console.WriteLine($"Plus {passengersWeight} kg. Current weight {_currentWeight} kg.");
     }
     
-    public void RemovePassengers(List<Passenger> passengers)
+    public void BeLeftBy(List<Passenger> passengers)
     {
         
         foreach (var passenger in passengers)
@@ -62,45 +67,13 @@ public class Elevator
         Console.WriteLine($"Minus {passengersWeight} kg. Current weight {_currentWeight} kg.");
     }
     
-    public void RemovePassengers(Passenger passenger)
-    {
-        
-        Passengers.Remove(passenger);
-        
-        _currentWeight -= passenger.Weight;
-
-        if (_currentWeight <= 0)
-        {
-            amountOfActiveEvevators -= 1;
-        }
-    }
-
-
-    public void MoveUp()
-    {
-        if (Level <= Levels[^1])
-        {
-            Level += 1;
-            RandomlyBreak();
-        }
-    }
-    
-    public void MoveDown()
-    {
-        if (Level >= Levels[0])
-        {
-            Level -= 1;
-            RandomlyBreak();
-        }
-    }
-    
 
     public bool IsMaxWeightAchieved()
     {
         bool isElevatorFull = _currentWeight >= _maxWeight;
         if (isElevatorFull)
         {
-            Console.WriteLine($"Elevator {_id} is full.");
+            Console.WriteLine($"Elevator {_id} is too full.");
         }
 
         return isElevatorFull;
@@ -114,19 +87,56 @@ public class Elevator
         int result = rnd.Next(1, 10);
         if (result == 1)
         {
-            State = ElevatorState.Broken;
+            IsBroken = true;
             Level = Levels[0];
             RandomlyInjurePassengers();
         }
     }
 
     // Some passengers are lucky to survive the elevator crash.
-    private void RandomlyInjurePassengers()
+    public void MoveToLevel(int levelNr)
     {
-        if (Passengers.Count == 0)
+
+        if (Level != levelNr)
         {
-            return;
+            Close();
+            if (levelNr > Level)
+            {
+                while (Level <= Levels[^1])
+                {
+                    Level += 1;
+                    RandomlyBreak();
+                }
+            }
+            else
+            {
+                while (Level >= Levels[0])
+                {
+                    Level -= 1;
+                    RandomlyBreak();
+                }
+            }
+            Open();
         }
+    }
+
+    private void Open()
+    {
+        IsOpen = true;
+    }
+
+    private void Close()
+    {
+        IsOpen = false;
+    }
+
+    public void GetFixed()
+    {
+        IsBroken = false;
+    }
+
+    private List<Passenger> RandomlyInjurePassengers()
+    {
         var rnd = new Random();
         foreach (var passenger in Passengers)
         {
@@ -138,16 +148,7 @@ public class Elevator
                 passenger.GetInjury();
             }
         }
-    }
-    
-    public bool IsBroken()
-    {
-        return State == ElevatorState.Broken;
-    }
-}
 
-public enum ElevatorState
-{
-    Ok = 0,
-    Broken = 1
+        return Passengers;
+    }
 }

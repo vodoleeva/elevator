@@ -33,13 +33,13 @@ public class Janitor
 
     public void TakeOutBodies(Elevator elevator)
     {
-        foreach (var passenger in elevator.Passengers)
+        foreach (var passenger in elevator.GetCurrentPassengers())
         {
             if (passenger.IsDead())
             {
                 Activity = JanitorsActivity.CleanElevator;
                 React(JanitorsActivity.CleanElevator);
-                elevator.RemovePassengers(passenger);
+                elevator.BeLeftBy(new List<Passenger>{passenger});
                 passenger.ChangeActivity(PassengersActivity.LyingInJanitorsTransporter);
             }
         }
