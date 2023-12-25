@@ -1,21 +1,23 @@
+using ElevatorApp.DataAccess;
+using ElevatorApp.Interfaces;
+using ElevatorApp.Services;
+
 namespace ElevatorApp.Entities;
 
 public class Engine
 {
+    private readonly IPassengerService _passengerService;
     private Engine()
     {
-        Value = "";
+        _passengerService = new PassengerService(new PassengerRepo());
     }
 
     private static Engine? _instance;
 
 
     private static readonly object _lock = new object();
-    
-    // We'll use this property to prove that our Singleton really works.
-    public string Value { get; set; }
 
-    public static Engine GetInstance(string value)
+    public static Engine GetInstance()
     {
         if (_instance == null)
         {
@@ -36,17 +38,20 @@ public class Engine
                 if (_instance == null)
                 {
                     _instance = new Engine();
-                    _instance.Value = value;
                 }
             }
             
         }
 
         return _instance;
-
-
     }
-    
 
-
+    public void Run()
+    {
+        while (true)
+        {
+            var randomPassenger = _passengerService.CreateRandomPassenger();
+            Console.WriteLine($"Name: {randomPassenger.Name}, Weight: {randomPassenger.Weight}");
+        }
+    }
 }

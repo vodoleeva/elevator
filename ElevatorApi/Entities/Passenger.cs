@@ -1,13 +1,14 @@
+using ElevatorApp.Interfaces;
 using Microsoft.AspNetCore.Mvc;
 
 namespace ElevatorApp.Entities;
 
-public class Passenger
+public class Passenger: IPassenger
 {
     private Guid _id;
     
     public string Name { get; }
-    public int Weight { get; private set; }
+    public int Weight { get; }
     public State State { get; private set; }
     
     private PassengersActivity PassengersActivity { get; set; }

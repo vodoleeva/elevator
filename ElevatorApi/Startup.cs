@@ -1,3 +1,5 @@
+using ElevatorApp.DataAccess;
+using ElevatorApp.Services.Passenger;
 using Microsoft.OpenApi.Models;
 
 namespace ElevatorApp;
@@ -8,8 +10,13 @@ public class Startup
     {
         services.AddHttpContextAccessor();
 
-        services.AddScoped<Services.ElevatorService>();
-        services.AddScoped<Repo.ElevatorRepo>();
+        // services.AddScoped<Services.ElevatorService>();
+        // services.AddScoped<Repo.ElevatorRepo>();
+        //
+        // services.AddScoped<PassengerService>();
+        // services.AddScoped<PassengerRepo>();
+        
+        
 
         services.AddControllers();
 
@@ -33,6 +40,7 @@ public class Startup
                     .AllowCredentials();
             });
         });
+        
     }
 
     public void Configure(IApplicationBuilder app, IWebHostEnvironment env, ILogger<Startup> logger)
@@ -49,6 +57,8 @@ public class Startup
         app.UseCors("ClientPermission");
         
         app.UseRouting();
-
+        
     }
+
+
 }

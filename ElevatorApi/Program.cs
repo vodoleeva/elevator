@@ -1,11 +1,17 @@
 
 using ElevatorApp;
+using ElevatorApp.Entities;
 
 public class Programm
 {
     public static void Main(string[] args)
     {
-        CreateHostBuilder(args).Build().Run();
+        CreateHostBuilder(args)
+            .Build();
+
+        Engine engine = Engine.GetInstance();
+        engine.Run();
+        //.Run();
     }
     
     private static IHostBuilder CreateHostBuilder(string[] args) => Host.CreateDefaultBuilder(args)
