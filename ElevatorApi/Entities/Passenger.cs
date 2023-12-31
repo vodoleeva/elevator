@@ -5,6 +5,7 @@ namespace ElevatorApp.Entities;
 
 public class Passenger: IPassenger
 {
+
     private Guid _id;
     
     public string Name { get; }
@@ -48,8 +49,17 @@ public class Passenger: IPassenger
     {
         PassengersActivity = passengersActivity;
         React(passengersActivity);
-
     }
+
+    public void Act()
+    {
+        while (true)
+        {
+            
+        }
+    }
+    
+    
     
     private void React(PassengersActivity passengersActivity)
     {

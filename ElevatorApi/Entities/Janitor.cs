@@ -39,8 +39,8 @@ public class Janitor
             {
                 Activity = JanitorsActivity.CleanElevator;
                 React(JanitorsActivity.CleanElevator);
-                elevator.BeLeftBy(new List<Passenger>{passenger});
-                passenger.ChangeActivity(PassengersActivity.LyingInJanitorsTransporter);
+                // elevator.BeLeftBy(new List<Passenger>{passenger});
+                // passenger.ChangeActivity(PassengersActivity.LyingInJanitorsTransporter);
             }
         }
     }
